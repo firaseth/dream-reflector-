@@ -1,0 +1,5 @@
+{
+  "name": "Dream Reflector",
+  "description": "A cinematic dream visualizer that turns your dreams into artistic images and videos using AI.",
+  "requestFramePermissions": ["microphone"]
+}

@@ -1,0 +1,103 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: users
+    // Document ID: userId (Firebase Auth UID)
+    // Fields:
+    //   - uid: string (required)
+    //   - email: string (required, email format)
+    //   - displayName: string (optional)
+    //   - photoURL: string (optional, URL format)
+    //   - language: string (enum: ['en', 'ar'])
+    //   - credits: number (required, positive)
+    //   - isPremium: bool (required)
+    //
+    // Collection: dreams
+    // Document ID: dreamId (auto-generated)
+    // Fields:
+    //   - userId: string (required, matches owner)
+    //   - description: string (required, < 1000 chars)
+    //   - enhancedPrompt: string (required, < 2000 chars)
+    //   - mediaUrl: string (required, URL format)
+    //   - mediaType: string (enum: ['image', 'video'])
+    //   - createdAt: timestamp (required)
+    //   - language: string (enum: ['en', 'ar'])
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isDocOwner() {
+      return isAuthenticated() && request.auth.uid == resource.data.userId;
+    }
+
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    function isValidUrl(url) {
+      return url is string && (url.matches("^https://.*") || url.matches("^http://.*") || url.matches("^data:.*"));
+    }
+
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+    function isValidUser(data) {
+      return hasOnlyAllowedFields(['uid', 'email', 'displayName', 'photoURL', 'language', 'credits', 'isPremium']) &&
+             data.uid == request.auth.uid &&
+             isValidEmail(data.email) &&
+             data.credits is number && data.credits >= 0 &&
+             data.isPremium is bool &&
+             (data.language in ['en', 'ar']);
+    }
+
+    function isValidDream(data) {
+      return hasOnlyAllowedFields(['userId', 'description', 'enhancedPrompt', 'mediaUrl', 'mediaType', 'createdAt', 'language']) &&
+             data.userId == request.auth.uid &&
+             data.description is string && data.description.size() < 1000 &&
+             data.enhancedPrompt is string && data.enhancedPrompt.size() < 2000 &&
+             isValidUrl(data.mediaUrl) &&
+             (data.mediaType in ['image', 'video']) &&
+             data.createdAt is timestamp &&
+             (data.language in ['en', 'ar']);
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidUser(request.resource.data) && request.resource.data.credits == 5; // Initial credits
+      allow update: if isOwner(userId) && isValidUser(request.resource.data) && 
+                    (request.resource.data.credits <= resource.data.credits || request.auth.token.email == "firas25nft@gmail.com"); // Only allow credit decrease or admin
+    }
+
+    match /dreams/{dreamId} {
+      allow read: if isDocOwner();
+      allow create: if isAuthenticated() && isValidDream(request.resource.data);
+      allow delete: if isDocOwner();
+    }
+
+    // Default deny
+    match /{path=**} {
+      allow read, write: if false;
+    }
+  }
+}

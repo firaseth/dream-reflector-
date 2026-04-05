@@ -1,0 +1,56 @@
+export const TRANSLATIONS = {
+  en: {
+    appName: 'Dream Reflector',
+    tagline: 'Visualize your subconscious',
+    inputPlaceholder: 'Describe your dream...',
+    generateImage: 'Generate Image',
+    generateVideo: 'Generate Video',
+    myLibrary: 'My Library',
+    settings: 'Settings',
+    language: 'Language',
+    credits: 'Credits',
+    premium: 'Go Premium',
+    share: 'Share',
+    save: 'Save',
+    noDreams: 'No dreams yet. Start by describing one!',
+    generating: 'Reflecting your dream...',
+    error: 'Something went wrong. Please try again.',
+    voiceInput: 'Tap to speak',
+    listening: 'Listening...',
+    style: 'Artistic Style',
+    cinematic: 'Cinematic',
+    surreal: 'Surreal',
+    oilPainting: 'Oil Painting',
+    cyberpunk: 'Cyberpunk',
+  },
+  ar: {
+    appName: 'عاكس مرئي للأحلام',
+    tagline: 'جسّد أحلامك بصرياً',
+    inputPlaceholder: 'صف حلمك هنا...',
+    generateImage: 'توليد صورة',
+    generateVideo: 'توليد فيديو',
+    myLibrary: 'مكتبتي',
+    settings: 'الإعدادات',
+    language: 'اللغة',
+    credits: 'الرصيد',
+    premium: 'الترقية للمميز',
+    share: 'مشاركة',
+    save: 'حفظ',
+    noDreams: 'لا توجد أحلام بعد. ابدأ بوصف حلمك!',
+    generating: 'جاري تجسيد حلمك...',
+    error: 'حدث خطأ ما. يرجى المحاولة مرة أخرى.',
+    voiceInput: 'اضغط للتحدث',
+    listening: 'جاري الاستماع...',
+    style: 'النمط الفني',
+    cinematic: 'سينمائي',
+    surreal: 'سريالي',
+    oilPainting: 'لوحة زيتية',
+    cyberpunk: 'سايبربانك',
+  },
+};
+
+export const SYSTEM_INSTRUCTION = `You are a dream interpreter and prompt engineer. 
+Your task is to take a user's dream description (in English or Arabic) and enhance it into a highly detailed, cinematic, and artistic prompt for image or video generation.
+Focus on lighting, mood, texture, and surreal elements. 
+If the input is in Arabic, translate the core concepts to English for the generation model but keep the artistic essence.
+Output ONLY the enhanced prompt in English.`;

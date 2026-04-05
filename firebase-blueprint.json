@@ -1,0 +1,45 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores user preferences and credits",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Unique user ID from Firebase Auth" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string", "format": "uri" },
+        "language": { "type": "string", "enum": ["en", "ar"] },
+        "credits": { "type": "integer", "description": "Number of generation credits remaining" },
+        "isPremium": { "type": "boolean" }
+      },
+      "required": ["uid", "email", "credits"]
+    },
+    "Dream": {
+      "title": "Dream",
+      "description": "A generated dream visualization",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "description": { "type": "string" },
+        "enhancedPrompt": { "type": "string" },
+        "mediaUrl": { "type": "string", "format": "uri" },
+        "mediaType": { "type": "string", "enum": ["image", "video"] },
+        "createdAt": { "type": "integer" },
+        "language": { "type": "string", "enum": ["en", "ar"] }
+      },
+      "required": ["userId", "description", "mediaUrl", "mediaType", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile document"
+    },
+    "/dreams/{dreamId}": {
+      "schema": "Dream",
+      "description": "Dream visualization documents"
+    }
+  }
+}
