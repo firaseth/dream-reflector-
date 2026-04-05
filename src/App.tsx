@@ -27,6 +27,7 @@ import {
   onSnapshot, 
   doc, 
   setDoc, 
+  addDoc,
   updateDoc, 
   serverTimestamp,
   orderBy,
@@ -148,10 +149,12 @@ export default function App() {
     }
 
     if (type === 'video') {
-      const hasKey = await (window as any).aistudio.hasSelectedApiKey();
-      if (!hasKey) {
-        await (window as any).aistudio.openSelectKey();
-        // After opening the dialog, we assume the user will select a key and we proceed.
+      // aistudio API is only available when running inside Google AI Studio
+      if (typeof (window as any).aistudio !== 'undefined') {
+        const hasKey = await (window as any).aistudio.hasSelectedApiKey();
+        if (!hasKey) {
+          await (window as any).aistudio.openSelectKey();
+        }
       }
     }
 
@@ -184,8 +187,10 @@ export default function App() {
     } catch (error) {
       console.error(error);
       if (error instanceof Error && error.message.includes("Requested entity was not found")) {
-        alert("API Key error. Please re-select your API key.");
-        await (window as any).aistudio.openSelectKey();
+        alert("API Key error. Please check your GEMINI_API_KEY configuration.");
+        if (typeof (window as any).aistudio !== 'undefined') {
+          await (window as any).aistudio.openSelectKey();
+        }
       } else {
         alert(t.error);
       }
@@ -203,7 +208,7 @@ export default function App() {
           userId: authUser.uid,
           createdAt: serverTimestamp(),
         };
-        await setDoc(doc(dreamsRef), dreamData);
+        await addDoc(dreamsRef, dreamData);
         setView('library');
         setCurrentDream(null);
       } catch (error) {

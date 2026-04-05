@@ -1,11 +1,14 @@
-import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
+import { GoogleGenAI } from "@google/genai";
 import { SYSTEM_INSTRUCTION } from "../constants";
 
+const getApiKey = (): string =>
+  (process.env.GEMINI_API_KEY || '');
+
 export async function enhancePrompt(dreamDescription: string, style: string = 'cinematic'): Promise<string> {
-  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
+  const ai = new GoogleGenAI({ apiKey: getApiKey() });
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-2.0-flash",
       contents: `Dream description: ${dreamDescription}\nArtistic style: ${style}`,
       config: {
         systemInstruction: SYSTEM_INSTRUCTION,
@@ -19,10 +22,10 @@ export async function enhancePrompt(dreamDescription: string, style: string = 'c
 }
 
 export async function generateDreamImage(prompt: string): Promise<string> {
-  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
+  const ai = new GoogleGenAI({ apiKey: getApiKey() });
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-3.1-flash-image-preview',
+      model: 'gemini-2.0-flash-preview-image-generation',
       contents: {
         parts: [
           {
@@ -31,10 +34,7 @@ export async function generateDreamImage(prompt: string): Promise<string> {
         ],
       },
       config: {
-        imageConfig: {
-          aspectRatio: "16:9",
-          imageSize: "1K"
-        },
+        responseModalities: ['TEXT', 'IMAGE'],
       },
     });
 
@@ -51,16 +51,16 @@ export async function generateDreamImage(prompt: string): Promise<string> {
 }
 
 export async function generateDreamVideo(prompt: string): Promise<string> {
-  // Use the user's selected API key for video generation
-  const apiKey = (process.env as any).API_KEY || process.env.GEMINI_API_KEY || '';
+  const apiKey = getApiKey();
   const ai = new GoogleGenAI({ apiKey });
   
   try {
     let operation = await ai.models.generateVideos({
-      model: 'veo-3.1-lite-generate-preview',
+      model: 'veo-2.0-generate-001',
       prompt: `Cinematic dream sequence: ${prompt}. Artistic, surreal, slow motion, ethereal.`,
       config: {
         numberOfVideos: 1,
+        durationSeconds: 8,
         resolution: '720p',
         aspectRatio: '16:9'
       }
