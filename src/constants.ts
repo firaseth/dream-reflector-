@@ -1,7 +1,10 @@
-export const TRANSLATIONS = {
+﻿export type Language = 'en' | 'ar';
+import type { DreamStyle } from './types';
+
+export const TRANSLATIONS: Record<Language, Record<string, string>> = {
   en: {
     appName: 'Dream Reflector',
-    tagline: 'Visualize your subconscious',
+    tagline: 'Transform your dreams into stunning visual art',
     inputPlaceholder: 'Describe your dream...',
     generateImage: 'Generate Image',
     generateVideo: 'Generate Video',
@@ -18,22 +21,39 @@ export const TRANSLATIONS = {
     voiceInput: 'Tap to speak',
     listening: 'Listening...',
     style: 'Artistic Style',
-    cinematic: 'Cinematic',
-    surreal: 'Surreal',
-    oilPainting: 'Oil Painting',
-    cyberpunk: 'Cyberpunk',
+    home: 'Home',
+    createDream: 'Create',
+    profile: 'Profile',
+    all: 'All',
+    favorites: 'Favorites',
+    images: 'Images',
+    interpretDream: 'Interpret Dream',
+    interpreting: 'Interpreting...',
+    dreamBook: 'My Dream Book',
+    noDreamsYet: 'Record your first dream!',
+    startNow: 'Start Now',
+    generateYourDream: 'Generate Your Dream',
+    recording: 'Recording...',
+    describeYourDream: 'Describe your dream',
+    recordVoice: 'Record your voice',
+    generationType: 'Generation Type',
+    image: 'Image',
+    video: 'Video',
+    interpretation: 'Interpretation',
+    psychologicalAnalysis: 'Psychological & Spiritual analysis',
+    disclaimer: 'AI-generated content — For entertainment purposes only',
   },
   ar: {
     appName: 'عاكس مرئي للأحلام',
-    tagline: 'جسّد أحلامك بصرياً',
-    inputPlaceholder: 'صف حلمك هنا...',
+    tagline: 'حوّل أحلامك إلى لوحات فنية مذهلة',
+    inputPlaceholder: 'صف حلمك هنا... ✨',
     generateImage: 'توليد صورة',
     generateVideo: 'توليد فيديو',
     myLibrary: 'مكتبتي',
     settings: 'الإعدادات',
     language: 'اللغة',
     credits: 'الرصيد',
-    premium: 'الترقية للمميز',
+    premium: 'ترقية إلى المميز',
     share: 'مشاركة',
     save: 'حفظ',
     noDreams: 'لا توجد أحلام بعد. ابدأ بوصف حلمك!',
@@ -42,15 +62,66 @@ export const TRANSLATIONS = {
     voiceInput: 'اضغط للتحدث',
     listening: 'جاري الاستماع...',
     style: 'النمط الفني',
-    cinematic: 'سينمائي',
-    surreal: 'سريالي',
-    oilPainting: 'لوحة زيتية',
-    cyberpunk: 'سايبربانك',
+    home: 'الرئيسية',
+    createDream: 'أنشئ',
+    profile: 'حسابي',
+    all: 'الكل',
+    favorites: 'المفضلة',
+    images: 'الصور',
+    interpretDream: 'تفسير الحلم',
+    interpreting: 'جارٍ التفسير...',
+    dreamBook: 'كتبي الشخصية',
+    noDreamsYet: 'سجّل حلمك الأول!',
+    startNow: 'ابدأ الآن',
+    generateYourDream: 'ولّد حلمك',
+    recording: 'جارٍ التسجيل...',
+    describeYourDream: 'صِف حلمك',
+    recordVoice: 'سجّل حلمك بالصوت',
+    generationType: 'نوع التوليد',
+    image: 'صورة',
+    video: 'فيديو',
+    interpretation: 'تفسير',
+    psychologicalAnalysis: 'تحليل نفسي وروحي',
+    disclaimer: 'المحتوى المُولّد بواسطة الذكاء الاصطناعي - للأغراض الترفيهية فقط',
   },
 };
 
-export const SYSTEM_INSTRUCTION = `You are a dream interpreter and prompt engineer. 
-Your task is to take a user's dream description (in English or Arabic) and enhance it into a highly detailed, cinematic, and artistic prompt for image or video generation.
-Focus on lighting, mood, texture, and surreal elements. 
-If the input is in Arabic, translate the core concepts to English for the generation model but keep the artistic essence.
-Output ONLY the enhanced prompt in English.`;
+export const SYSTEM_INSTRUCTION = `You are a dream interpreter and prompt engineer. Your task is to take a user's dream description (in English or Arabic) and enhance it into a highly detailed, cinematic, and artistic prompt for image or video generation. Focus on lighting, mood, texture, and surreal elements. If the input is in Arabic, translate the core concepts to English for the generation model but keep the artistic essence. Output ONLY the enhanced prompt in English.`;
+
+export const INTERPRET_SYSTEM_INSTRUCTION = `You are an expert dream analyst.`;
+
+export const STYLE_LABELS: Record<string, string> = {
+  realistic: '📷 Realistic',
+  surreal: '🌀 Surreal',
+  cinematic: '🎬 Cinematic',
+  ghibli: '🌸 Studio Ghibli',
+  dark_fantasy: '🌑 Dark Fantasy',
+  oilPainting: '🎨 Oil Painting',
+  cyberpunk: '⚡ Cyberpunk',
+  watercolor: '💧 Watercolor',
+  anime: '⭐ Anime',
+};
+
+export const STYLES: { id: string; labelEn: string; labelAr: string; emoji: string }[] = [
+  { id: 'realistic', labelEn: 'Realistic', labelAr: 'واقعي', emoji: '📷' },
+  { id: 'surreal', labelEn: 'Surreal', labelAr: 'سريالي', emoji: '🌀' },
+  { id: 'cinematic', labelEn: 'Cinematic', labelAr: 'سينمائي', emoji: '🎬' },
+  { id: 'ghibli', labelEn: 'Studio Ghibli', labelAr: 'غيبلي', emoji: '🌸' },
+  { id: 'dark_fantasy', labelEn: 'Dark Fantasy', labelAr: 'فانتازيا مظلمة', emoji: '🌑' },
+  { id: 'oilPainting', labelEn: 'Oil Painting', labelAr: 'لوحة زيتية', emoji: '🎨' },
+  { id: 'cyberpunk', labelEn: 'Cyberpunk', labelAr: 'سايبربانك', emoji: '⚡' },
+  { id: 'watercolor', labelEn: 'Watercolor', labelAr: 'ألوان مائية', emoji: '💧' },
+  { id: 'anime', labelEn: 'Anime', labelAr: 'أنمي', emoji: '⭐' },
+];
+
+export const STYLE_PROMPTS: Record<string, string> = {
+  realistic: 'photorealistic, ultra-detailed, natural lighting, 8K resolution',
+  surreal: 'surrealist art style, dreamlike atmosphere, Salvador Dali inspired, floating objects, impossible geometry',
+  cinematic: 'cinematic shot, dramatic lighting, anamorphic lens, film grain, movie scene composition, 4K cinematic',
+  ghibli: 'Studio Ghibli animation style, Hayao Miyazaki, soft watercolor, whimsical, hand-drawn anime, magical',
+  dark_fantasy: 'dark fantasy art, moody atmosphere, dramatic shadows, gothic elements, epic, high detail',
+  oilPainting: 'oil painting style, thick brushstrokes, rich colors, classical art, renaissance inspired, textured canvas',
+  cyberpunk: 'cyberpunk aesthetic, neon lights, futuristic city, rain, holographic, blade runner inspired',
+  watercolor: 'delicate watercolor painting, soft edges, pastel colors, artistic, painterly, ethereal',
+  anime: 'high-quality anime art, detailed illustration, vibrant, Japanese animation style, beautiful',
+};

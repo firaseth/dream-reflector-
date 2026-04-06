@@ -1,64 +1,177 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", sans-serif;
+/* ============================================
+   Dream Reflector — Dreamy Dark Theme
+   ============================================ */
 
-  --color-background: hsl(240 10% 3.9%);
-  --color-foreground: hsl(0 0% 98%);
-  --color-card: hsl(240 10% 3.9%);
-  --color-card-foreground: hsl(0 0% 98%);
-  --color-popover: hsl(240 10% 3.9%);
-  --color-popover-foreground: hsl(0 0% 98%);
-  --color-primary: hsl(263.4 70% 50.4%);
-  --color-primary-foreground: hsl(210 40% 98%);
-  --color-secondary: hsl(240 3.7% 15.9%);
-  --color-secondary-foreground: hsl(0 0% 98%);
-  --color-muted: hsl(240 3.7% 15.9%);
-  --color-muted-foreground: hsl(240 5% 64.9%);
-  --color-accent: hsl(240 3.7% 15.9%);
-  --color-accent-foreground: hsl(0 0% 98%);
-  --color-destructive: hsl(0 62.8% 30.6%);
-  --color-destructive-foreground: hsl(0 0% 98%);
-  --color-border: hsl(240 3.7% 15.9%);
-  --color-input: hsl(240 3.7% 15.9%);
-  --color-ring: hsl(263.4 70% 50.4%);
+:root {
+  --dream-purple: #7c3aed;
+  --dream-blue: #3b82f6;
+  --dream-pink: #ec4899;
+  --dream-indigo: #6366f1;
+  --dream-violet: #8b5cf6;
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground font-sans antialiased;
-    background-image: 
-      radial-gradient(at 0% 0%, hsla(263, 70%, 50%, 0.15) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, hsla(280, 70%, 50%, 0.15) 0px, transparent 50%),
-      radial-gradient(at 50% 100%, hsla(240, 70%, 50%, 0.1) 0px, transparent 50%);
-    background-attachment: fixed;
-  }
+.dream-gradient-bg {
+  background: linear-gradient(135deg, #0f0a1a 0%, #1a0e2e 25%, #0d1b2a 50%, #1a0e2e 75%, #0f0a1a 100%);
+}
+
+.dream-gradient-card {
+  background: linear-gradient(145deg, rgba(124, 58, 237, 0.08) 0%, rgba(59, 130, 246, 0.05) 50%, rgba(236, 72, 153, 0.08) 100%);
+  border: 1px solid rgba(124, 58, 237, 0.15);
+}
+
+.dream-gradient-button {
+  background: linear-gradient(135deg, #7c3aed 0%, #6366f1 50%, #ec4899 100%);
+}
+
+.dream-gradient-text {
+  background: linear-gradient(135deg, #a78bfa 0%, #818cf8 50%, #f472b6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dream-glow {
+  box-shadow: 0 0 30px rgba(124, 58, 237, 0.15), 0 0 60px rgba(99, 102, 241, 0.1);
+}
+
+.floating-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.15;
+  pointer-events: none;
+  animation: float 15s ease-in-out infinite;
+}
+
+.floating-orb-1 {
+  width: 200px; height: 200px;
+  background: #7c3aed;
+  top: -50px; right: -50px;
+}
+
+.floating-orb-2 {
+  width: 150px; height: 150px;
+  background: #ec4899;
+  bottom: 20%; left: -30px;
+  animation-delay: -5s;
+}
+
+.floating-orb-3 {
+  width: 180px; height: 180px;
+  background: #3b82f6;
+  bottom: -40px; right: 20%;
+  animation-delay: -10s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  33% { transform: translateY(-20px) scale(1.05); }
+  66% { transform: translateY(10px) scale(0.95); }
+}
+
+.stars-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, rgba(167, 139, 250, 0.4), transparent),
+    radial-gradient(1px 1px at 40px 70px, rgba(129, 140, 248, 0.3), transparent),
+    radial-gradient(1px 1px at 50px 160px, rgba(244, 114, 182, 0.3), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(167, 139, 250, 0.2), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(129, 140, 248, 0.4), transparent),
+    radial-gradient(1px 1px at 160px 120px, rgba(244, 114, 182, 0.2), transparent);
+  background-size: 200px 200px;
+  animation: twinkle 8s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.recording-pulse::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 2px solid #ef4444;
+  animation: pulse-ring 1.5s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.style-card {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(145deg, rgba(124, 58, 237, 0.06), rgba(59, 130, 246, 0.03), rgba(236, 72, 153, 0.06));
+}
+
+.style-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(124, 58, 237, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.style-card:hover::before,
+.style-card.selected::before {
+  opacity: 1;
+}
+
+.style-card.selected {
+  border-color: rgba(124, 58, 237, 0.5) !important;
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+}
+
+.glass {
+  background: rgba(15, 10, 26, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(124, 58, 237, 0.1);
 }
 
 .dreamy-glass {
-  @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl;
+  background: rgba(20, 12, 35, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(124, 58, 237, 0.12);
 }
 
-.dreamy-gradient {
-  @apply bg-gradient-to-br from-purple-600/20 via-blue-600/20 to-indigo-600/20;
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: rgba(15, 10, 26, 0.5); }
+::-webkit-scrollbar-thumb { background: rgba(124, 58, 237, 0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(124, 58, 237, 0.5); }
+
+.bottom-nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 3px;
+  background: linear-gradient(90deg, #7c3aed, #ec4899);
+  border-radius: 2px;
 }
 
-.dreamy-text-gradient {
-  @apply bg-gradient-to-r from-purple-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent;
+* { box-sizing: border-box; }
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: #0f0a1a;
+  color: white;
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
-
-/* Custom animations */
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-

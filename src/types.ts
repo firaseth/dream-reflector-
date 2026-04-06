@@ -1,4 +1,7 @@
-export type Language = 'en' | 'ar';
+﻿export type Language = 'en' | 'ar';
+
+export type DreamStyle = 'realistic' | 'surreal' | 'cinematic' | 'ghibli' | 'dark_fantasy' | 'oilPainting' | 'cyberpunk' | 'watercolor' | 'anime';
+export type GenerationType = 'image' | 'video';
 
 export interface Dream {
   id: string;
@@ -6,7 +9,11 @@ export interface Dream {
   description: string;
   enhancedPrompt: string;
   mediaUrl: string;
-  mediaType: 'image' | 'video';
+  mediaType: GenerationType;
+  style?: DreamStyle;
+  interpretation?: string;
+  isFavorite?: boolean;
+  title?: string;
   createdAt: number;
   language: Language;
 }

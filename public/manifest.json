@@ -1,0 +1,17 @@
+﻿{
+  "name": "عاكس مرئي للأحلام",
+  "short_name": "عاكس الأحلام",
+  "description": "حوّل أحلامك إلى لوحات فنية مذهلة باستخدام الذكاء الاصطناعي",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0a1a",
+  "theme_color": "#7c3aed",
+  "orientation": "portrait",
+  "dir": "rtl",
+  "lang": "ar",
+  "categories": ["lifestyle", "entertainment", "art"],
+  "icons": [
+    { "src": "/logo.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
